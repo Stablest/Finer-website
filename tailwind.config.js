@@ -7,11 +7,12 @@ module.exports = {
   ],
   theme: {
     colors: {
+      platinum: "#ECE9E7",
+      "black-olive": "#454339",
+      "old-rose": "#A37774",
       black: "#000000",
-      "yellow-gray": "#BBAB98",
       "dark-gray": "#454339",
       gray: "#D9D9D9",
-      white: "#ECE9E7",
     },
     extend: {
       backgroundImage: {
