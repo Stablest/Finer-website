@@ -11,6 +11,9 @@ export function Header() {
                 <HeaderItem>
                     Como usar
                 </HeaderItem>
+                <HeaderItem>
+                    Perguntas Frequentes
+                </HeaderItem>
             </div>
         </header>
     )
