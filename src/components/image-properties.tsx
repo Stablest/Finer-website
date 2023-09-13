@@ -10,11 +10,11 @@ export function ImageProperties() {
 
     return (
         <form action='POST'>
-            <div className='mt-10 mx-auto w-fit flex flex-col gap-y-4 text-sm'>
-                <div className='font-semibold text-center'>
+            <div className='mt-8 mx-auto w-fit text-sm p-2'>
+                <div className='font-semibold text-center text-lg py-2'>
                     Personalizar
                 </div>
-                <div className='flex flex-col gap-y-3'>
+                <div className='flex flex-col gap-y-2'>
                     <div className='flex gap-x-4'>
                         <LabelInput id='label-height' type='text' size={true}>
                             Altura
@@ -28,7 +28,7 @@ export function ImageProperties() {
                             <label htmlFor="select-format" className='px-2 py-1'>
                                 Formato
                             </label>
-                            <select name="select-format" id="select-format" className='p-1  bg-platinum max-w-[8rem] w-32 text-center border border-old-rose rounded-md text-old-rose focus:outline-none'>
+                            <select name="select-format" id="select-format" className='p-1  bg-platinum max-w-[8rem] w-32 text-center border border-black-olive rounded-md text-old-rose focus:outline-none'>
                                 <option value="default">Manter</option>
                                 <option value="jpg">jpg</option>
                                 <option value="webp">webp</option>
