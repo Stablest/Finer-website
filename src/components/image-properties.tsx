@@ -3,14 +3,13 @@
 import { ImageDropper } from "./image-dropper";
 import { LabelInput } from "./label-input";
 
-export function ImageOptimizer() {
+export function ImageProperties() {
     function formHandler(e: React.MouseEvent) {
         e.preventDefault()
     }
 
     return (
         <form action='POST'>
-            <ImageDropper></ImageDropper>
             <div className='mt-10 mx-auto w-fit flex flex-col gap-y-4 text-sm'>
                 <div className='font-semibold text-center'>
                     Personalizar
