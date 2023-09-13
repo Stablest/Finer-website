@@ -7,7 +7,7 @@ type HeaderItemProps = {
 export function HeaderItem({ children }: HeaderItemProps) {
     return (
         <button className="bg-white flex gap-x-1">
-            <div className="bg-black-olive w-0.5 h-full">
+            <div className="bg-black-olive min-w-[0.200rem] h-full">
             </div>
             {children}
         </button>
