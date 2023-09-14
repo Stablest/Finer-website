@@ -34,7 +34,7 @@ export default function Home() {
               <span className="font-semibold">Selecione as Características:</span> Explore as opções disponíveis para personalizar a imagem.
             </li>
             <li>
-              Clique no botão "Otimizar" para iniciar o processo.
+              Clique no botão &quot;Otimizar&quot; para iniciar o processo.
             </li>
             <li>
               Aguarde enquanto o servidor processa a imagem.
