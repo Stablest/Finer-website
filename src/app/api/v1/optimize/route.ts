@@ -16,13 +16,17 @@ export async function POST(req: NextRequest) {
         quality: quality ?? undefined,
       })
       .toBuffer();
-    return new Response(optImage, {
-      headers: { "Content-type": `image/${type}` },
+    const response = new Response(optImage, {
+      headers: {
+        "Content-Type": `image/${type}`,
+        "Content-Disposition": `attachment; filename="finer_image.${type}"`,
+      },
     });
+    return response;
   } catch (err) {
     console.error(err);
   }
-  return NextResponse.json({ sucess: false });
+  return NextResponse.json({ sucess: false }, { status: 400 });
 }
 
 function getOptimizeQuery(searchParams: URLSearchParams) {
