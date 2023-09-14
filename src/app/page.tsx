@@ -14,7 +14,6 @@ export default function Home() {
             É fácil! Basta soltar a imagem aqui, e selecionar as opções desejadas.
           </div>
         </div>
-        <ImageDropper></ImageDropper>
         <ImageProperties></ImageProperties>
       </Section>
       <section className="w-[70%] mx-auto flex flex-col gap-y-6">
