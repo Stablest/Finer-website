@@ -1,25 +1,77 @@
 'use client'
 
+import { useRef } from "react";
 import { ImageDropper } from "./image-dropper";
 import { LabelInput } from "./label-input";
+import { headers } from "next/dist/client/components/headers";
 
 export function ImageProperties() {
-    function formHandler(e: React.MouseEvent) {
+    const form_ref = useRef<HTMLFormElement | null>(null)
+    const a_ref = useRef<HTMLAnchorElement | null>(null)
+
+    async function formHandler(e: React.MouseEvent) {
         e.preventDefault()
+        if (!form_ref.current)
+            return
+        const formData = new FormData(form_ref.current)
+        const { body, queryString } = makeFormQueryBody(formData)
+
+        const res = await fetch('/api/v1/optimize' + queryString, {
+            method: 'post',
+            body: body,
+            headers: { 'content-type': 'image/webp' },
+        })
+        if (res.statusText !== 'OK')
+            return
+        const data = await res.blob()
+        if (!a_ref.current)
+            return
+        a_ref.current.href = window.URL.createObjectURL(data)
+        a_ref.current.download = findFileName(res.headers)
+        a_ref.current.click()
+    }
+
+    function makeFormQueryBody(formData: FormData) {
+        let queryString = '?'
+        let body: FormDataEntryValue = ''
+        for (const prop of formData.entries()) {
+            if (prop[1].length === 0)
+                continue
+            if (prop[1] instanceof File) {
+                body = prop[1]
+                continue
+            }
+            queryString += `${prop[0].toString()}=${prop[1].toString()}&`
+        }
+        queryString = queryString.slice(0, queryString.length - 1)
+        console.log(queryString)
+        return { body, queryString }
+    }
+
+    function findFileName(headers: Headers) {
+        let fileName = 'finer_img'
+        console.log([...headers.entries()])
+        const content = headers.get('content-disposition')
+        if (!content)
+            return fileName
+        fileName = content.split('filename=')[1].replaceAll('"', '')
+        return fileName
     }
 
     return (
-        <form action='POST'>
+        <form action='/api/v1/optimize' method="post" encType="multipart/form-data" ref={form_ref}>
+            <a href="" ref={a_ref} download hidden></a>
+            <ImageDropper></ImageDropper>
             <div className='mt-8 mx-auto w-fit text-sm p-2'>
                 <div className='font-semibold text-center text-lg py-2'>
                     Personalizar
                 </div>
                 <div className='flex flex-col gap-y-2'>
                     <div className='flex gap-x-4'>
-                        <LabelInput id='label-height' type='text' size={true}>
+                        <LabelInput id='height' type='text' size={true}>
                             Altura
                         </LabelInput>
-                        <LabelInput id='label-width' type='text' size={true}>
+                        <LabelInput id='width' type='text' size={true}>
                             Largura
                         </LabelInput>
                     </div>
@@ -28,14 +80,14 @@ export function ImageProperties() {
                             <label htmlFor="select-format" className='px-2 py-1'>
                                 Formato
                             </label>
-                            <select name="select-format" id="select-format" className='p-1  bg-platinum max-w-[8rem] w-32 text-center border border-black-olive rounded-md text-old-rose focus:outline-none'>
-                                <option value="default">Manter</option>
+                            <select name="type" id="select-format" className='p-1  bg-platinum max-w-[8rem] w-32 text-center border border-black-olive rounded-md text-old-rose focus:outline-none'>
+                                <option value="">Manter</option>
                                 <option value="jpg">jpg</option>
                                 <option value="webp">webp</option>
                                 <option value="png">png</option>
                             </select>
                         </div>
-                        <LabelInput id='label-quality' type='text'>
+                        <LabelInput id='quality' type='text'>
                             Qualidade
                         </LabelInput>
                     </div>
@@ -43,7 +95,7 @@ export function ImageProperties() {
                         <label htmlFor="input-fixed" className='text-old-rose px-2'>
                             Fixar proporção
                         </label>
-                        <input type="checkbox" name="input-fixed" id="input-fixed" />
+                        <input type="checkbox" name="fit" id="input-fixed" />
                     </div>
                     <button className='bg-black-olive mx-auto min-w-fit w-24 p-2 rounded-md text-platinum' onClick={(e) => formHandler(e)}>
                         Otimizar
