@@ -7,7 +7,7 @@ export enum OptimizeQueryParams {
 }
 
 export interface IOptimizeQueryParams {
-  type: string;
+  type: string | undefined;
   width: number | undefined;
   height: number | undefined;
   quality: number | undefined;
