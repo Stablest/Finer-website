@@ -15,11 +15,13 @@ export function ImageProperties() {
             return
         const formData = new FormData(form_ref.current)
         const { body, queryString } = makeFormQueryBody(formData)
-
+        if (!body)
+            return
+        console.log(body.type)
         const res = await fetch('/api/v1/optimize' + queryString, {
             method: 'post',
             body: body,
-            headers: { 'content-type': 'image/webp' },
+            headers: { 'content-type': body.type },
         })
         if (res.statusText !== 'OK')
             return
@@ -33,7 +35,7 @@ export function ImageProperties() {
 
     function makeFormQueryBody(formData: FormData) {
         let queryString = '?'
-        let body: FormDataEntryValue = ''
+        let body: File | undefined
         for (const prop of formData.entries()) {
             if (prop[1].length === 0)
                 continue
@@ -44,7 +46,7 @@ export function ImageProperties() {
             queryString += `${prop[0].toString()}=${prop[1].toString()}&`
         }
         queryString = queryString.slice(0, queryString.length - 1)
-        console.log(queryString)
+        // console.log(queryString)
         return { body, queryString }
     }
 
