@@ -9,17 +9,18 @@ export async function POST(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const { type, width, height, quality, fit } = getOptimizeQuery(searchParams);
   const body = await req.arrayBuffer();
+  const newType = type ?? req.headers.get(`content-type`)?.split(`/`)[1]
   try {
     const optImage = await sharp(body)
       .resize(width, height, { fit: fit as keyof sharp.FitEnum })
-      .toFormat(type as keyof sharp.FormatEnum, {
+      .toFormat(newType as keyof sharp.FormatEnum, {
         quality: quality ?? undefined,
       })
       .toBuffer();
     const response = new Response(optImage, {
       headers: {
-        "Content-Type": `image/${type}`,
-        "Content-Disposition": `attachment; filename="finer_image.${type}"`,
+        "Content-Type": `image/${newType}`,
+        "Content-Disposition": `attachment; filename="finer_image.${newType}"`,
       },
     });
     return response;
@@ -30,7 +31,7 @@ export async function POST(req: NextRequest) {
 }
 
 function getOptimizeQuery(searchParams: URLSearchParams) {
-  const type = searchParams.get(OptimizeQueryParams.TYPE) ?? "jpg";
+  const type = searchParams.get(OptimizeQueryParams.TYPE) ?? undefined;
   const fit = searchParams.get(OptimizeQueryParams.FIT) ?? "contain";
   let entryWidth = searchParams.get(OptimizeQueryParams.WIDTH);
   let entryHeight = searchParams.get(OptimizeQueryParams.HEIGHT);
