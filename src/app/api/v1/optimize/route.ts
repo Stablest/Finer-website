@@ -2,6 +2,7 @@ import {
   IOptimizeQueryParams,
   OptimizeQueryParams,
 } from "@/utils/interfaces/OptimizeQueryParams";
+import { findHeaderFileName } from "@/utils/interfaces/functions/header";
 import { NextResponse, NextRequest } from "next/server";
 import sharp from "sharp";
 
@@ -20,7 +21,7 @@ export async function POST(req: NextRequest) {
     const response = new Response(optImage, {
       headers: {
         "Content-Type": `image/${newType}`,
-        "Content-Disposition": `attachment; filename="finer_image.${newType}"`,
+        "Content-Disposition": `attachment; filename="${findHeaderFileName(req.headers)}.${newType}"`,
       },
     });
     return response;
