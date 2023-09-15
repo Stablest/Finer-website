@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import { ImageDropper } from "./image-dropper";
 import { LabelInput } from "./label-input";
-import { headers } from "next/dist/client/components/headers";
+import { findHeaderFileName } from "@/utils/interfaces/functions/header";
 
 export function ImageProperties() {
     const form_ref = useRef<HTMLFormElement | null>(null)
@@ -21,7 +21,8 @@ export function ImageProperties() {
         const res = await fetch('/api/v1/optimize' + queryString, {
             method: 'post',
             body: body,
-            headers: { 'content-type': body.type },
+            headers: { 'content-type': body.type ,
+            'content-disposition': `attachment; filename=${body.name}`},
         })
         if (res.statusText !== 'OK')
             return
@@ -29,7 +30,7 @@ export function ImageProperties() {
         if (!a_ref.current)
             return
         a_ref.current.href = window.URL.createObjectURL(data)
-        a_ref.current.download = findFileName(res.headers)
+        a_ref.current.download = findHeaderFileName(res.headers, true)
         a_ref.current.click()
     }
 
@@ -46,19 +47,9 @@ export function ImageProperties() {
             queryString += `${prop[0].toString()}=${prop[1].toString()}&`
         }
         queryString = queryString.slice(0, queryString.length - 1)
-        // console.log(queryString)
         return { body, queryString }
     }
 
-    function findFileName(headers: Headers) {
-        let fileName = 'finer_img'
-        console.log([...headers.entries()])
-        const content = headers.get('content-disposition')
-        if (!content)
-            return fileName
-        fileName = content.split('filename=')[1].replaceAll('"', '')
-        return fileName
-    }
 
     return (
         <form action='/api/v1/optimize' method="post" encType="multipart/form-data" ref={form_ref}>
