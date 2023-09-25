@@ -18,14 +18,14 @@ export default function Home() {
       </Section>
       <section className="w-[70%] mx-auto flex flex-col gap-y-6">
         <Section
-          title={<h1 className="text-4xl font-semibold">Como funciona</h1>}>
+          title={<h2 className="text-4xl font-semibold">Como funciona</h2>}>
           <p className="indent-8 text-justify text-lg">
             Após o upload da imagem e a solicitação de otimização, a imagem é enviada para um servidor dedicado, onde um algoritmo processa as personalizações definidas.
             Essas configurações refinam a imagem, garantindo que as características selecionadas sejam aplicadas de maneira precisa e eficaz, resultando em uma imagem otimizada de alta qualidade.
           </p>
         </Section>
         <Section
-          title={<h1 className="text-4xl font-semibold">Como usar</h1>}>
+          title={<h2 className="text-4xl font-semibold">Como usar</h2>}>
           <ol className="list-decimal list-inside flex flex-col gap-y-2 [&_li]:my-1">
             <li>
               <span className="font-semibold">Upload da Imagem:</span> Clique no botão de upload ou arraste a imagem desejada para a área indicada. Aguarde até que a imagem seja completamente carregada.
@@ -45,7 +45,7 @@ export default function Home() {
           </ol>
         </Section>
         <Section
-          title={<h1 className="text-4xl font-semibold">Perguntas Frequentes</h1>}>
+          title={<h2 className="text-4xl font-semibold">Perguntas Frequentes</h2>}>
           <ol className="list-decimal list-inside flex flex-col gap-y-2 [&_li]:my-1">
             <li>
               <span className="font-semibold">Altura e Largura:</span>
