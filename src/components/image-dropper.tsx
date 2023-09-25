@@ -17,7 +17,7 @@ export function ImageDropper() {
                 <label htmlFor="input-file" className='bg-black-olive cursor-pointer p-2 mx-auto min-w-[8rem] w-32 text-center rounded-md text-platinum inline-block'>
                     Procurar
                 </label>
-                <input type="file" id="input-file" name="image" className='hidden' accept="" />
+                <input type="file" id="input-file" name="image" className='hidden'/>
             </div>
         </div>
     )
