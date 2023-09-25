@@ -19,16 +19,16 @@ export function LabelInput({ children, id, type, size, ...labelAttributes }: Siz
     }
 
     return (
-        <label htmlFor={id} {...labelAttributes} className={labelAttributes.className ?? 'text-sm text-old-rose'}>
-            <div className='mx-1 p-1'>
+        <div className='text-sm text-old-rose'>
+            <label htmlFor={id} {...labelAttributes} className={labelAttributes.className ?? 'mx-1 p-1'}>
                 {children}
-            </div>
+            </label>
             <div className='border border-solid border-black-olive rounded-md flex p-1'>
                 <input type={type} name={id} id={id} className={`bg-platinum px-1 max-w-[6rem] ${newBorderRight()} ${size && 'text-right'} appearance-none focus:outline-none`} />
                 <div className={`px-1 ${!size && 'invisible'}`}>
                     px
                 </div>
             </div>
-        </label>
+        </div>
     )
 }
